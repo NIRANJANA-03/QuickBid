@@ -1,0 +1,66 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<style>
+    .alert-container {
+        text-align: center; 
+        margin-top: 20px;
+    }
+
+    .alert {
+        display: inline-block; 
+        padding: 15px;
+        margin: 10px 0;
+        font-size: 16px;
+        border-radius: 5px;
+        background-color: #f8d7da; 
+        color: #721c24; 
+    }
+
+    .alert-error {
+        background-color: #f44336; 
+        color: white; 
+    }
+</style>
+    <h2>Place a Bid on "{{ listing.title }}"</h2>
+    <div class="mt-4">
+        {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        <p>{{ listing.description }}</p>
+        <p>Starting Bid: ${{ listing.starting_bid }}</p>
+
+        {% if listing.image_url %}
+            <img src="{{ listing.image_url }}" alt="Listing Image" class="img-fluid">
+        {% endif %}
+        
+        <p>Category: {{ listing.category|default:"None" }}</p>
+
+       
+        <p>Highest Bid: 
+            {% if highest_bid %}
+                ${{ highest_bid.amount }}
+            {% else %}
+                No bids yet
+            {% endif %}
+        </p>
+        
+
+        <h4>Place Your Bid</h4>
+        <form action="{% url 'place_bid' listing.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="bid">Bid Amount</label>
+                <input class="form-control" type="number" name="bid" step="0.01" placeholder="Enter your bid" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Place Bid</button>
+        </form>
+    </div>
+{% endblock %}

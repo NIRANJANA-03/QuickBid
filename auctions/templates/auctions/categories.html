@@ -1,0 +1,64 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <style>
+        
+        .categories-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; 
+            background-color: #f8f9fa; 
+        }
+
+        .categories-container {
+            text-align: center;
+            background: #ffffff; 
+            padding: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+        }
+
+        .categories-container h2 {
+            margin-bottom: 20px;
+            color: #343a40; 
+        }
+
+        .categories-container ul {
+            list-style: none; 
+            padding: 0;
+        }
+
+        .categories-container li {
+            margin: 10px 0;
+        }
+
+        .categories-container a {
+            text-decoration: none;
+            color: #007bff; 
+            font-size: 18px;
+            font-weight: bold;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .categories-container a:hover {
+            color: #ffffff; 
+            background-color: #007bff; 
+            padding: 5px 10px;
+            border-radius: 5px; 
+        }
+    </style>
+
+    <div class="categories-wrapper">
+        <div class="categories-container">
+            <h2>Categories</h2>
+            <ul>
+                {% for category in categories %}
+                    <li>
+                        <a href="{% url 'category_listing' category %}">{{ category }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2 class="text-center mb-4">Listings in "{{ category_name }}"</h2>
+
+    {% if listings %}
+        <div class="row">
+            {% for listing in listings %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 {% if listing.active %}border-success{% else %}border-danger{% endif %} shadow-sm">
+            <a href="{% url 'listing' listing.id %}">
+            <img 
+                src="{{ listing.image_url }}" 
+                alt="{{ listing.title }}" 
+                class="card-img-top"
+                style="height: 200px; width: 100%; object-fit: cover;"
+            >
+            </a>
+            <div class="card-body">
+                <h5 class="card-title text-center">{{ listing.title }}</h5>
+                <p class="card-text">{{ listing.description }}</p>
+                <p><strong>Starting Bid:</strong> ${{ listing.starting_bid }}</p>
+                <p><strong>Category:</strong> {{ listing.category }}</p>
+            </div>
+            <div class="card-footer text-muted">
+                {% if listing.active %}
+                    <span class="badge badge-success">Active</span>
+                {% else %}
+                    <span class="badge badge-danger">Inactive</span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+        </div>
+    {% else %}
+        <p class="text-center">No listings found in this category.</p>
+    {% endif %}
+
+    <style>
+        .card {
+            border-radius: 8px; 
+            overflow: hidden; 
+        }
+
+        .card.shadow-sm {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
+        }
+
+        .card.border-success {
+            background-color: #d4edda; 
+        }
+
+        .card.border-danger {
+            background-color: #f8d7da; 
+        }
+
+        .card-body {
+            padding: 20px; 
+        }
+
+        .card-footer {
+            background-color: #f1f1f1;
+            text-align: center;
+        }
+
+        .badge {
+            font-size: 14px; 
+            padding: 5px 10px;
+        }
+    </style>
+{% endblock %}

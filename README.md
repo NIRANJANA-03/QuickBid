@@ -1,4 +1,4 @@
-# Commerce
+# QuickBid
 this is a project part of the certification | CS50’s Web Programming with Python and JavaScript.
 
 ## Overview
